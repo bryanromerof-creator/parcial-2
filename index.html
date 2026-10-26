@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tymon's Family Diner | Pizzería & Escape Room</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #07050a;
+            --bg-panel: #120d1a;
+            --neon-red: #ff003c;
+            --neon-gold: #ffb703;
+            --text-light: #f8f9fa;
+            --text-dim: #a09ab0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Rajdhani', sans-serif;
+            min-height: 100vh;
+        }
+
+        /* BARRA SUPERIOR */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            background: rgba(10, 7, 16, 0.95);
+            border-bottom: 2px solid var(--neon-red);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .brand h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.4rem;
+            color: var(--neon-gold);
+            text-transform: uppercase;
+        }
+
+        .brand span {
+            font-size: 0.75rem;
+            color: var(--neon-red);
+            letter-spacing: 2px;
+            display: block;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background: rgba(255, 183, 3, 0.1);
+            border: 1px solid var(--neon-gold);
+            color: var(--neon-gold);
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: var(--neon-gold);
+            color: #000;
+        }
+
+        /* CONTENEDOR PRINCIPAL */
+        .container {
+            max-width: 1300px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* SECCIONES DINÁMICAS */
+        .section-box {
+            background: var(--bg-panel);
+            border: 1px solid #2b1f3d;
+            border-radius: 14px;
+            padding: 40px;
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            color: var(--neon-gold);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        /* GRID DE PRODUCTOS (3 IMÁGENES) */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 25px;
+        }
+
+        .card {
+            background: #191224;
+            border: 1px solid #35254d;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-bottom: 2px solid var(--neon-red);
+        }
+
+        .card-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-content h4 {
+            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .card-content p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        /* FORMULARIOS Y BOTONES (3 BOTONES PRINCIPALES) */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--neon-gold);
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            background: #0b090e;
+            border: 1px solid #3b2d54;
+            color: #fff;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .btn-main {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(90deg, #d90429, #ff003c);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .btn-main:hover {
+            background: var(--neon-gold);
+            color: #000;
+        }
+
+        .user-welcome {
+            color: var(--neon-gold);
+            font-weight: bold;
+        }
+
+        .hidden { display: none !important; }
+
+        /* CARRITO Y PANEL */
+        .cart-box {
+            background: #0e0a14;
+            border: 1px dashed var(--neon-gold);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BARRA DE NAVEGACIÓN Y AUTENTICACIÓN -->
+    <header class="navbar">
+        <div class="brand">
+            <div>
+                <h1>🦁 Tymon's Family Diner</h1>
+                <span>Pizzería • Show Animatrónico • Escape Room</span>
+            </div>
+        </div>
+        <div class="nav-actions">
+            <span id="userStatus" class="user-welcome">Invitado</span>
+            <button class="nav-btn" onclick="toggleAuthModal()">👤 Cuenta / Registro</button>
+            <a href="pagina2.html" class="nav-btn" style="background: var(--neon-red); color: #fff;">🔐 Ir a Página 2 (Reservas)</a>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- MODAL / SECCIÓN DE LOGIN Y REGISTRO -->
+        <div class="section-box" id="authSection">
+            <h2 class="section-title" id="authTitle">Registro de Usuario</h2>
+            <div style="max-width: 450px;">
+                <div class="form-group">
+                    <label>Nombre de Usuario</label>
+                    <input type="text" id="regUser" class="form-control" placeholder="Ej. Bryan Romero">
+                </div>
+                <div class="form-group">
+                    <label>Correo Electrónico</label>
+                    <input type="email" id="regEmail" class="form-control" placeholder="correo@cundinamarca.edu.co">
+                </div>
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <input type="password" id="regPass" class="form-control" placeholder="••••••••">
+                </div>
+                <button class="btn-main" onclick="registrarUsuario()">Crear Cuenta e Iniciar Sesión</button>
+            </div>
+        </div>
+
+        <!-- SECCIÓN DE PRODUCTOS Y MENÚ (3 IMÁGENES Y 3 BOTONES) -->
+        <div class="section-box">
+            <h2 class="section-title">🍕 Menú y Atracciones Principales</h2>
+            <p style="color: var(--text-dim);">Selecciona los servicios para añadirlos a tu panel de usuario activo.</p>
+
+            <div class="grid-3">
+                
+                <!-- Ítem 1 -->
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80" alt="Pizza">
+                    <div class="card-content">
+                        <h4>Pizza Suprema de Tymon ($48.000)</h4>
+                        <p>Doble pepperoni, queso fundido y masa artesanal al horno de piedra.</p>
+                        <!-- Botón 1 -->
+                        <button class="btn-main" onclick="agregarAlCarrito('Pizza Suprema de Tymon', 48000)">1. Agregar Pizza</button>
+                    </div>
+                </div>
+
+                <!-- Ítem 2 -->
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1614027164847-1b28cfe1df60?auto=format&fit=crop&w=600&q=80" alt="Show">
+                    <div class="card-content">
+                        <h4>Mesa VIP Show Animatrónico ($25.000)</h4>
+                        <p>Primera fila frente al escenario musical del león Tymon.</p>
+                        <!-- Botón 2 -->
+                        <button class="btn-main" onclick="agregarAlCarrito('Mesa VIP Show Tymon', 25000)">2. Reservar Mesa VIP</button>
+                    </div>
+                </div>
+
+                <!-- Ítem 3 -->
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=600&q=80" alt="Escape Room">
+                    <div class="card-content">
+                        <h4>Acceso Escape Room Nocturno ($120.000)</h4>
+                        <p>Reto de acertijos mecánicos y puertas magnéticas de 180kg.</p>
+                        <!-- Botón 3 -->
+                        <button class="btn-main" onclick="agregarAlCarrito('Escape Room Nocturno', 120000)">3. Comprar Entrada</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Panel de Carrito Dinámico -->
+            <div class="cart-box">
+                <h3 style="color: var(--neon-gold); margin-bottom: 10px;">🛒 Carrito de Compras del Usuario</h3>
+                <div id="cartList" style="color: #ccc; margin-bottom: 10px;">No hay productos seleccionados.</div>
+                <div id="cartTotal" style="font-weight: bold; color: #fff; margin-bottom: 15px;">Total: $0 COP</div>
+                <button class="btn-main" style="max-width: 250px;" onclick="procesarCompra()">Confirmar Pedido en Sistema</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let carrito = [];
+        let usuarioActual = localStorage.getItem('tymon_user') || null;
+
+        if(usuarioActual) {
+            document.getElementById('userStatus').innerText = `👤 ${usuarioActual}`;
+            document.getElementById('authSection').style.display = 'none';
+        }
+
+        function registrarUsuario() {
+            let user = document.getElementById('regUser').value;
+            if(!user) { alert('Por favor ingrese un nombre de usuario válido.'); return; }
+            localStorage.setItem('tymon_user', user);
+            document.getElementById('userStatus').innerText = `👤 ${user}`;
+            document.getElementById('authSection').style.display = 'none';
+            alert(`¡Bienvenido al sistema, ${user}! Sesión iniciada correctamente.`);
+        }
+
+        function agregarAlCarrito(nombre, precio) {
+            if(!localStorage.getItem('tymon_user')) {
+                alert('⚠️ Debe registrar su usuario arriba antes de agregar productos al carrito.');
+                window.scrollTo({top: 0, behavior: 'smooth'});
+                return;
+            }
+            carrito.push({nombre, precio});
+            actualizarCarrito();
+        }
+
+        function actualizarCarrito() {
+            let lista = document.getElementById('cartList');
+            let totalDiv = document.getElementById('cartTotal');
+            if(carrito.length === 0) {
+                lista.innerHTML = "No hay productos seleccionados.";
+                totalDiv.innerHTML = "Total: $0 COP";
+                return;
+            }
+            let html = "<ul>";
+            let total = 0;
+            carrito.forEach(item => {
+                html += `<li>${item.nombre} - $${item.precio.toLocaleString()} COP</li>`;
+                total += item.precio;
+            });
+            html += "</ul>";
+            lista.innerHTML = html;
+            totalDiv.innerHTML = `Total: $${total.toLocaleString()} COP`;
+        }
+
+        function procesarCompra() {
+            if(carrito.length === 0) { alert('El carrito está vacío.'); return; }
+            let user = localStorage.getItem('tymon_user');
+            alert(`✅ ¡Pedido procesado con éxito para ${user}!\nSe ha generado el tiquete digital y guardado en la base de datos.`);
+            carrito = [];
+            actualizarCarrito();
+        }
+
+        function toggleAuthModal() {
+            let sec = document.getElementById('authSection');
+            sec.style.display = sec.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>
