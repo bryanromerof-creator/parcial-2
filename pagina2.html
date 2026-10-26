@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Reservas | Tymon's Family Diner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: #07050a;
+            color: #f8f9fa;
+            font-family: 'Rajdhani', sans-serif;
+            min-height: 100vh;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            background: #0d0914;
+            border-bottom: 2px solid #ffb703;
+        }
+        .navbar h1 { font-family: 'Orbitron', sans-serif; color: #ffb703; font-size: 1.3rem; }
+        .nav-btn {
+            background: #ff003c; color: #fff; padding: 10px 20px; text-decoration: none; font-weight: bold; border-radius: 6px; font-family: 'Orbitron', sans-serif; font-size: 0.85rem;
+        }
+        .container { max-width: 800px; margin: 50px auto; padding: 0 20px; }
+        .box {
+            background: #120d1a; border: 2px solid #ff003c; border-radius: 14px; padding: 40px;
+            box-shadow: 0 0 30px rgba(255, 0, 60, 0.2);
+        }
+        h2 { font-family: 'Orbitron', sans-serif; color: #ff003c; margin-bottom: 20px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; color: #ffb703; font-weight: bold; margin-bottom: 5px; }
+        input, select { width: 100%; padding: 12px; background: #0b090e; border: 1px solid #4a356e; color: #fff; border-radius: 6px; font-size: 1rem; }
+        .btn { width: 100%; padding: 14px; background: #ffb703; color: #000; font-family: 'Orbitron', sans-serif; font-weight: 800; border: none; border-radius: 6px; cursor: pointer; text-transform: uppercase; }
+        .btn:hover { background: #ff003c; color: #fff; }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <h1>🔐 Panel de Control de Escape Room</h1>
+        <a href="index.html" class="nav-btn">⬅ Volver al Menú Principal (Página 1)</a>
+    </header>
+
+    <div class="container">
+        <div class="box">
+            <h2>Formulario Oficial de Reservas</h2>
+            <p style="color: #b0a8c2; margin-bottom: 25px;">Seleccione la fecha y la sala de escape a la que desea ingresar con su equipo de amigos.</p>
+            
+            <div class="form-group">
+                <label>Nombre del Responsable del Grupo</label>
+                <input type="text" id="resNombre" placeholder="Ej. Bryan Romero">
+            </div>
+            <div class="form-group">
+                <label>Seleccionar Sala Mecánica</label>
+                <select id="resSala">
+                    <option>Sala 1: El Taller de Tymon (Dificultad Alta)</option>
+                    <option>Sala 2: Pasillo de Control Electrónico (Dificultad Extrema)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Fecha y Hora del Turno</label>
+                <input type="datetime-local" id="resFecha">
+            </div>
+            <button class="btn" onclick="registrarReserva()">Guardar y Enviar Reserva al Sistema</button>
+        </div>
+    </div>
+
+    <script>
+        function registrarReserva() {
+            let nombre = document.getElementById('resNombre').value;
+            let sala = document.getElementById('resSala').value;
+            let fecha = document.getElementById('resFecha').value;
+            if(!nombre || !fecha) {
+                alert('Por favor complete todos los campos del formulario.');
+                return;
+            }
+            alert(`🎉 ¡Reserva exitosa!\n\nResponsable: ${nombre}\nSala: ${sala}\nFecha: ${fecha}\n\nLos códigos de apertura magnética han sido asignados.`);
+        }
+    </script>
+</body>
+</html>
