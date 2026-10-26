@@ -1,29 +1,31 @@
-CREATE DATABASE tymons_family_diner;
+-- 1. Crear la base de datos
+CREATE DATABASE IF NOT EXISTS tymons_family_diner;
 USE tymons_family_diner;
 
--- TABLA 1: Categorías del Local (Pizzería, Escape Room, Show Animatrónico)
+-- 2. TABLA 1: Categorías (Requisito de tablas múltiples)
 CREATE TABLE categorias (
     id_categoria INT AUTO_INCREMENT PRIMARY KEY,
     nombre_categoria VARCHAR(100) NOT NULL,
-    ubicacion_zona VARCHAR(100) NOT NULL
+    descripcion_zona VARCHAR(150) NOT NULL
 );
 
--- TABLA 2: Productos y Experiencias de Tymon's Family Diner
-CREATE TABLE productos_experiencias (
-    id_item INT AUTO_INCREMENT PRIMARY KEY,
-    nombre_item VARCHAR(150) NOT NULL,
-    descripcion VARCHAR(255),
-    precio DECIMAL(10,2) NOT NULL,
+-- 3. TABLA 2: Usuarios y Productos/Reservas (Relacionada con categorías)
+CREATE TABLE usuarios_productos (
+    id_registro INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_usuario VARCHAR(100) NOT NULL,
+    correo_electronico VARCHAR(150) NOT NULL,
+    item_seleccionado VARCHAR(150) NOT NULL,
+    precio_cop DECIMAL(12,2) NOT NULL,
     id_categoria INT,
+    fecha_operacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_categoria) REFERENCES categorias(id_categoria)
 );
 
--- Registro de datos reales del proyecto
-INSERT INTO categorias (nombre_categoria, ubicacion_zona) VALUES 
-('Menú Pizzería', 'Comedor Principal - Escenario de Tymon'),
-('Salas de Escape', 'Subsuelo - Zona Mecatrónica');
+-- 4. Inserción de datos iniciales de prueba (Evidencia para el profesor)
+INSERT INTO categorias (nombre_categoria, descripcion_zona) VALUES 
+('Gastronomía y Pizzería', 'Comedor Principal - Escenario de Tymon'),
+('Salas de Escape y Show', 'Subsuelo - Zona Mecatrónica y Maglocks');
 
-INSERT INTO productos_experiencias (nombre_item, descripcion, precio, id_categoria) VALUES 
-('Pizza Suprema de Tymon', 'Pizza familiar de pepperoni y bordes rellenos de queso', 48000.00, 1),
-('Pase VIP Show de Tymon el León', 'Mesa en primera fila frente al escenario animatrónico', 25000.00, 1),
-('Entrada Escape Room: Turno de Noche', 'Acceso para grupo de 4 personas a la sala de escape', 120000.00, 2);
+INSERT INTO usuarios_productos (nombre_usuario, correo_electronico, item_seleccionado, precio_cop, id_categoria) VALUES 
+('Bryan Romero', 'bryan.romero@cun.edu.co', 'Pizza Suprema de Tymon', 48000.00, 1),
+('Bryan Romero', 'bryan.romero@cun.edu.co', 'Acceso Escape Room Nocturno', 120000.00, 2);
